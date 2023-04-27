@@ -40,7 +40,7 @@ class Datapost(BaseModel):
     nome: str
     id: str
 
-class Datadelete(BaseModel);
+class Datadelete(BaseModel):
     nome: str
 
 @app.post("/post")
