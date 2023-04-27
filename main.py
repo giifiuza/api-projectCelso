@@ -46,7 +46,7 @@ class Datadelete(BaseModel):
 @app.post("/post")
 def post(data: Datapost):
     cursor, cnx = conecta()
-    cursor.execute(f"INSERT INTO cadastro(nome, id) values ({data.nome}, {data.id}")
+    cursor.execute(f"INSERT INTO cadastro(nome, id) values ({data.nome}, {data.id})")
     cnx.commit()
     cnx.close()
     cursor.close()
