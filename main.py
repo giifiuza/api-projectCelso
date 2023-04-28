@@ -53,7 +53,7 @@ def post(data: Datapost):
     return {"nome": data.nome, "id": data.id}
 
 
-@app.post("/delete")
+@app.delete("/delete")
 def delete(data: Datadelete):
     cursor, cnx = conecta()
     cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
