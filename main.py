@@ -56,7 +56,7 @@ def post(data: Datapost):
 @app.post("/delete")
 def delete(data: Datadelete):
     cursor, cnx = conecta()
-    cursor.execute(f"DELETE FROM cadastro WHERE nome = {data.nome}")
+    cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
     cnx.commit()
     cnx.close()
     cursor.close()
