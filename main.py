@@ -2,6 +2,7 @@ import fastapi
 import pymysql
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from http.client import HTTPException
 
 
 
@@ -61,15 +62,16 @@ def delete(data: Datadelete):
     cursor.execute("SELECT * FROM cadastro WHERE nome = '{data.nome}'")
     result = cursor.fetchone()
     cursor.close()
-    if result is None:
+        if result is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    cursor, cnx = conecta()
-    cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
-    cnx.commit()
-    cnx.close()
-    cursor.close()
-    return {'message': "Usuário deletado"}
-
+    else:
+        cursor, cnx = conecta()
+        cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
+        cnx.commit()
+        cnx.close()
+        cursor.close()
+        return {'message': "Usuário deletado"}
+       
 
 if __name__ ==  '__main__':
    import uvicorn
