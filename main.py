@@ -2,7 +2,6 @@ import fastapi
 import pymysql
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from http.client import HTTPException
 
 
 
@@ -56,14 +55,17 @@ def post(data: Datapost):
 
 @app.delete("/delete")
 def delete(data: Datadelete):
-   
     cursor, cnx = conecta()
-  
-    cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
-    cnx.commit()
-    cnx.close()
-    cursor.close()
-    return {'message': "Usuário deletado"}
+    cursor.execute(f"SELECT * FROM cadastro WHERE nome = '{data.nome}'")
+    cadastro = cursor.fetchall()
+    if len(cadastro) >= 1:
+        cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
+        cnx.commit()
+        cnx.close()
+        cursor.close()
+        return {'message': "Usuário deletado"}
+    else:
+        return {'message': "Usuário não encontrado"}
        
 
 if __name__ ==  '__main__':
