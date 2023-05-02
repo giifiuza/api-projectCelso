@@ -58,19 +58,12 @@ def post(data: Datapost):
 def delete(data: Datadelete):
    
     cursor, cnx = conecta()
-   
-    cursor.execute("SELECT * FROM cadastro WHERE nome = '{data.nome}'")
-    result = cursor.fetchone()
+  
+    cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
+    cnx.commit()
+    cnx.close()
     cursor.close()
-        if result is None:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    else:
-        cursor, cnx = conecta()
-        cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
-        cnx.commit()
-        cnx.close()
-        cursor.close()
-        return {'message': "Usuário deletado"}
+    return {'message': "Usuário deletado"}
        
 
 if __name__ ==  '__main__':
