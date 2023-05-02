@@ -31,7 +31,6 @@ def get():
     cursor, cnx = conecta()
     cursor.execute("SELECT * FROM cadastro")
     cadastro = cursor.fetchall()
-    cnx.close()
     cursor.close()
     return {"message": cadastro}
 
@@ -48,7 +47,6 @@ def post(data: Datapost):
     cursor, cnx = conecta()
     cursor.execute(f"INSERT INTO cadastro(nome, id) values (%s, %s)", (data.nome, data.id))
     cnx.commit()
-    cnx.close()
     cursor.close()
     return {"nome": data.nome, "id": data.id}
 
@@ -56,16 +54,10 @@ def post(data: Datapost):
 @app.delete("/delete")
 def delete(data: Datadelete):
     cursor, cnx = conecta()
-    cursor.execute(f"SELECT * FROM cadastro WHERE nome = '{data.nome}'")
-    cadastro = cursor.fetchall()
-    if len(cadastro) >= 1:
-        cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
-        cnx.commit()
-        cnx.close()
-        cursor.close()
-        return {'message': "Usuário deletado"}
-    else:
-        return {'message': "Usuário não encontrado"}
+    cursor.execute(f"DELETE FROM cadastro WHERE nome = '{data.nome}'")
+    cnx.commit()
+    cursor.close()
+    return {'message': "Usuário deletado"}
        
 
 if __name__ ==  '__main__':
