@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 def conecta():
     cnx = pymysql.connect(
-        user="cafi@projetocelso", password="senai@mange2023", host="projetocelso.mariadb.database.azure.com", port=3306,
+        user="projectcelso@systemaccess", password="senai@mange2023", host="systemaccess.mariadb.database.azure.com", port=3306,
         database="projeto_rfid"
     )
     cursor = cnx.cursor()
